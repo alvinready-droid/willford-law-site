@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willford Law Corporation — Personal Injury Attorneys, Santa Ana CA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --ink: #0d0d0e; --ink-2: #181818; --ink-3: #212121;
+  --gold: #c8a96e; --gold-light: #e0c898; --gold-dark: #9a7a45; --gold-glow: rgba(200,169,110,0.18);
+  --cream: #faf8f4; --muted: #6e6b66; --body-text: #38352f;
+  --r: 16px; --r-sm: 10px; --r-lg: 24px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--ink); color: var(--cream); overflow-x: hidden; cursor: none; }
+
+/* ─── CURSOR ─── */
+#cur, #cur-r {
+  position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%); will-change: transform;
+}
+#cur { width: 9px; height: 9px; background: var(--gold); transition: width .3s, height .3s, background .3s; }
+#cur-r { width: 34px; height: 34px; border: 1px solid rgba(200,169,110,.45); transition: width .3s, height .3s, opacity .3s; }
+body.hovering #cur { width: 16px; height: 16px; background: var(--gold-light); }
+body.hovering #cur-r { width: 50px; height: 50px; opacity: .5; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.6rem 4rem;
+  transition: background .5s, backdrop-filter .5s, padding .4s, border-color .5s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(13,13,14,.88); backdrop-filter: blur(22px);
+  padding: 1rem 4rem; border-color: rgba(200,169,110,.1);
+}
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo img { height: 34px; filter: brightness(0) invert(1); opacity: .92; transition: opacity .3s; }
+.nav-logo:hover img { opacity: 1; }
+.nav-links { display: flex; align-items: center; gap: 2.4rem; }
+.nav-links a { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase; text-decoration: none; color: rgba(250,248,244,.55); transition: color .3s; }
+.nav-links a:hover { color: var(--gold-light); }
+.nav-cta {
+  font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid var(--gold); color: var(--gold);
+  padding: .58rem 1.4rem; border-radius: 99px; text-decoration: none;
+  transition: background .3s, color .3s, box-shadow .3s;
+}
+.nav-cta:hover { background: var(--gold); color: var(--ink); box-shadow: 0 0 26px rgba(200,169,110,.4); }
+
+/* ─── FLOATING CTA ─── */
+.float-cta {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 150;
+  background: var(--gold); color: var(--ink);
+  font-size: .76rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  padding: .85rem 1.7rem; border-radius: 99px; text-decoration: none;
+  box-shadow: 0 6px 32px rgba(200,169,110,.5);
+  transition: background .3s, transform .3s, box-shadow .3s;
+  opacity: 0; animation: fadeUp .7s ease 2s forwards;
+}
+.float-cta:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 10px 40px rgba(200,169,110,.55); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 4rem 6rem;
+}
+/* Hero background — real accident/legal scene image */
+.hero-bg-img {
+  position: absolute; inset: 0;
+  background: url('https://willfordlawcorp.com/wp-content/uploads/2025/06/image12.jpg') center center / cover no-repeat;
+  transform: scale(1.06);
+  transition: transform .1s linear;
+}
+.hero-bg-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(13,13,14,.97) 0%, rgba(13,13,14,.78) 55%, rgba(13,13,14,.25) 100%),
+    linear-gradient(to top, rgba(13,13,14,1) 0%, rgba(13,13,14,.6) 25%, transparent 60%);
+}
+/* Tom portrait on right — cinematic overlay */
+.hero-portrait {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 42%; overflow: hidden;
+}
+.hero-portrait img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  filter: grayscale(15%) contrast(1.08);
+  transition: transform .1s linear;
+}
+.hero-portrait::before {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(to right, var(--ink) 0%, rgba(13,13,14,.6) 40%, transparent 80%),
+    linear-gradient(to top, var(--ink) 0%, transparent 25%),
+    linear-gradient(to bottom, rgba(13,13,14,.5) 0%, transparent 20%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 720px; }
+.eyebrow {
+  display: flex; align-items: center; gap: .9rem; margin-bottom: 1.75rem;
+  opacity: 0; animation: slideUp .9s ease .3s forwards;
+}
+.eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--gold); flex-shrink: 0; }
+.eyebrow span { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.2rem, 6.5vw, 6.2rem);
+  font-weight: 300; line-height: 1.04; letter-spacing: -.01em;
+  opacity: 0; animation: slideUp 1s ease .5s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--gold-light); }
+.hero-sub {
+  margin-top: 1.6rem; max-width: 460px;
+  font-size: .97rem; line-height: 1.8; color: rgba(250,248,244,.5); font-weight: 300;
+  opacity: 0; animation: slideUp 1s ease .7s forwards;
+}
+.hero-actions {
+  margin-top: 2.25rem; display: flex; gap: 1rem; align-items: center;
+  opacity: 0; animation: slideUp 1s ease .9s forwards;
+}
+.btn-gold {
+  background: var(--gold); color: var(--ink);
+  padding: .9rem 2.2rem; border-radius: 99px;
+  font-size: .82rem; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
+  text-decoration: none; border: none; cursor: none; display: inline-block;
+  transition: background .3s, box-shadow .3s, transform .25s;
+}
+.btn-gold:hover { background: var(--gold-light); box-shadow: 0 8px 36px rgba(200,169,110,.42); transform: translateY(-2px); }
+.btn-ghost {
+  font-size: .78rem; letter-spacing: .09em; text-transform: uppercase;
+  color: rgba(250,248,244,.5); text-decoration: none;
+  display: flex; align-items: center; gap: .45rem; transition: color .3s;
+}
+.btn-ghost:hover { color: var(--gold-light); }
+.btn-ghost::after { content: '↗'; }
+.hero-stats {
+  position: absolute; right: 4rem; bottom: 6rem; z-index: 3;
+  display: flex; flex-direction: column; gap: 1.5rem; text-align: right;
+  opacity: 0; animation: fadeIn 1.2s ease 1.2s forwards;
+}
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 500; line-height: 1; }
+.stat-label { font-size: .67rem; letter-spacing: .17em; text-transform: uppercase; color: var(--muted); margin-top: .2rem; }
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .45rem; z-index: 2;
+  opacity: 0; animation: fadeIn 1s ease 1.7s forwards;
+}
+.scroll-hint span { font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.scroll-line { width: 1px; height: 38px; background: linear-gradient(to bottom, var(--gold), transparent); animation: pulse 2s ease-in-out infinite; }
+
+/* ─── TRUST BAR ─── */
+.trust-bar {
+  background: var(--ink-2); border-top: 1px solid rgba(200,169,110,.08);
+  border-bottom: 1px solid rgba(200,169,110,.08);
+  padding: 2rem 4rem; display: flex; align-items: center; gap: 3rem;
+  overflow: hidden;
+}
+.trust-item { display: flex; align-items: center; gap: .9rem; flex-shrink: 0; }
+.trust-num { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 500; color: var(--gold); }
+.trust-text { font-size: .75rem; color: rgba(250,248,244,.45); line-height: 1.45; max-width: 120px; }
+.trust-divider { width: 1px; height: 36px; background: rgba(200,169,110,.15); flex-shrink: 0; }
+
+/* ─── SECTION UTILITIES ─── */
+section { padding: 8rem 4rem; }
+.s-label { display: flex; align-items: center; gap: .9rem; margin-bottom: 1.4rem; }
+.s-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); flex-shrink: 0; }
+.s-label span { font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+.s-label.dark::before { background: var(--gold-dark); }
+.s-label.dark span { color: var(--gold-dark); }
+
+/* ─── PILLARS ─── */
+.pillars { background: var(--ink-2); }
+.pillars-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4.5rem; }
+.pillars-head h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.3rem, 4vw, 3.6rem); font-weight: 300; line-height: 1.1; max-width: 500px; }
+.pillars-head h2 em { font-style: italic; color: var(--gold-light); }
+.pillars-head p { max-width: 260px; font-size: .88rem; line-height: 1.8; color: rgba(250,248,244,.45); text-align: right; }
+.pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+.p-card {
+  background: var(--ink-3); padding: 2.5rem; position: relative; overflow: hidden;
+  transition: background .35s; cursor: none;
+}
+.p-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+}
+.p-card:hover { background: #1d1d1d; }
+.p-card:hover::after { transform: scaleX(1); }
+.p-num { font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-weight: 300; color: rgba(200,169,110,.12); line-height: 1; margin-bottom: 1.25rem; }
+.p-title { font-size: 1rem; font-weight: 500; margin-bottom: .6rem; }
+.p-text { font-size: .85rem; color: rgba(250,248,244,.45); line-height: 1.78; }
+
+/* ─── ABOUT ─── */
+.about { background: var(--ink); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.about-img-wrap {
+  position: relative; aspect-ratio: 3/4; border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,.6);
+}
+.about-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform .6s ease; }
+.about-img-wrap:hover img { transform: scale(1.03); }
+.about-gold-bar { position: absolute; top: 2rem; left: 0; width: 3px; height: 72px; background: var(--gold); border-radius: 0 2px 2px 0; z-index: 2; }
+.about-badge {
+  position: absolute; bottom: 2rem; right: -1rem; z-index: 2;
+  background: var(--gold); color: var(--ink);
+  padding: 1rem 1.4rem; border-radius: var(--r);
+  box-shadow: 0 12px 40px rgba(0,0,0,.4);
+  text-align: center;
+}
+.about-badge-num { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 500; line-height: 1; }
+.about-badge-label { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; margin-top: .2rem; opacity: .8; }
+.about-content h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.4rem; }
+.about-content h2 em { font-style: italic; color: var(--gold-light); }
+.about-content p { font-size: .93rem; line-height: 1.87; color: rgba(250,248,244,.52); font-weight: 300; margin-bottom: 1.1rem; }
+.about-quote { border-left: 2px solid var(--gold); padding-left: 1.4rem; margin: 1.8rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; color: rgba(250,248,244,.8); line-height: 1.5; }
+.about-creds { display: flex; gap: 2.2rem; margin-top: 2.2rem; }
+.cred-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 500; color: var(--gold); line-height: 1; }
+.cred-label { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: .2rem; }
+
+/* ─── PRACTICE AREAS ─── */
+.practice { background: var(--cream); color: var(--body-text); }
+.practice h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.8vw, 3.4rem); font-weight: 300; color: var(--ink); line-height: 1.1; margin-bottom: 3.5rem; }
+.practice h2 em { font-style: italic; color: var(--gold-dark); }
+.practice-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
+.pr-card {
+  background: white; border-radius: var(--r); overflow: hidden;
+  box-shadow: 0 2px 18px rgba(0,0,0,.07);
+  transition: transform .35s ease, box-shadow .35s ease; cursor: none;
+  display: flex; flex-direction: column;
+}
+.pr-card:hover { transform: translateY(-7px); box-shadow: 0 18px 52px rgba(0,0,0,.15); }
+.pr-card:hover .pr-img img { transform: scale(1.07); }
+.pr-card:hover .pr-arrow { transform: translate(3px,-3px); color: var(--gold-dark); }
+.pr-img { aspect-ratio: 4/3; overflow: hidden; position: relative; background: #e8e6e1; }
+.pr-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.pr-body { padding: 1.5rem 1.5rem 1.75rem; flex: 1; position: relative; }
+.pr-arrow { position: absolute; top: 1.25rem; right: 1.25rem; font-size: 1rem; color: #ccc; transition: transform .3s, color .3s; }
+.pr-card h3 { font-size: .97rem; font-weight: 500; color: var(--ink); margin-bottom: .5rem; line-height: 1.3; }
+.pr-card p { font-size: .8rem; color: var(--muted); line-height: 1.7; }
+
+/* ─── RESULTS ─── */
+.results { background: var(--ink-2); }
+.results-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+.results-top h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.8vw, 3.4rem); font-weight: 300; line-height: 1.1; }
+.results-top h2 em { font-style: italic; color: var(--gold-light); }
+.results-top p { max-width: 240px; font-size: .82rem; color: rgba(250,248,244,.4); line-height: 1.75; text-align: right; }
+.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 2rem; }
+.r-card {
+  border-radius: var(--r); overflow: hidden; position: relative; cursor: none;
+  transition: transform .35s, box-shadow .35s;
+  min-height: 340px; display: flex; flex-direction: column; justify-content: flex-end;
+}
+.r-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.r-card-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transition: transform .5s ease;
+}
+.r-card:hover .r-card-bg { transform: scale(1.04); }
+.r-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,13,14,.96) 0%, rgba(13,13,14,.55) 60%, rgba(13,13,14,.2) 100%);
+}
+.r-card-content { position: relative; z-index: 2; padding: 2rem; }
+.r-amount { font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-weight: 300; color: var(--gold); line-height: 1; }
+.r-type { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,248,244,.5); margin: .4rem 0 .8rem; }
+.r-desc { font-size: .82rem; color: rgba(250,248,244,.5); line-height: 1.7; }
+.results-note { font-size: .7rem; color: rgba(250,248,244,.2); line-height: 1.7; max-width: 560px; }
+
+/* ─── MEDIA STRIP ─── */
+.media-strip { background: var(--gold); padding: 5.5rem 4rem; }
+.media-inner { display: flex; justify-content: space-between; align-items: center; gap: 3rem; flex-wrap: wrap; }
+.media-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.2vw, 2.8rem); font-weight: 400; color: var(--ink); line-height: 1.1; margin-bottom: .75rem; }
+.media-left h2 em { font-style: italic; font-weight: 300; }
+.media-left p { font-size: .9rem; color: rgba(13,13,14,.6); max-width: 440px; line-height: 1.75; }
+.media-badges { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+.mbadge { background: rgba(13,13,14,.12); border: 1px solid rgba(13,13,14,.2); color: var(--ink); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; padding: .5rem 1.1rem; border-radius: 99px; transition: background .3s; }
+.mbadge:hover { background: rgba(13,13,14,.22); }
+.media-right .btn-gold { background: var(--ink); color: var(--gold); }
+.media-right .btn-gold:hover { background: var(--ink-2); }
+
+/* ─── TESTIMONIALS ─── */
+.testimonials { background: var(--ink); }
+.testimonials h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3rem); font-weight: 300; margin-bottom: 3.5rem; max-width: 440px; line-height: 1.1; }
+.testimonials h2 em { font-style: italic; color: var(--gold-light); }
+.t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.t-card {
+  background: var(--ink-2); border-radius: var(--r); padding: 2rem;
+  border: 1px solid rgba(200,169,110,.08);
+  transition: border-color .35s, transform .35s; cursor: none;
+}
+.t-card:hover { border-color: rgba(200,169,110,.32); transform: translateY(-5px); }
+.t-card.featured { grid-column: span 2; background: var(--ink-3); }
+.t-stars { color: var(--gold); font-size: .78rem; letter-spacing: 2px; margin-bottom: .65rem; }
+.t-quote { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: .8; color: var(--gold); opacity: .4; margin-bottom: .3rem; }
+.t-text { font-size: .9rem; color: rgba(250,248,244,.65); line-height: 1.82; margin-bottom: 1.4rem; font-weight: 300; }
+.t-author { display: flex; align-items: center; gap: .75rem; }
+.t-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--ink-3); }
+.t-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.t-name { font-size: .85rem; font-weight: 500; }
+.t-role { font-size: .7rem; color: var(--muted); }
+
+/* ─── TEAM ─── */
+.team { background: var(--ink-3); }
+.team-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+.team-head h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.1; }
+.team-head h2 em { font-style: italic; color: var(--gold-light); }
+.team-head p { max-width: 240px; font-size: .85rem; color: rgba(250,248,244,.4); line-height: 1.75; text-align: right; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.tm-card {
+  background: var(--ink-2); border-radius: var(--r); overflow: hidden;
+  border: 1px solid rgba(200,169,110,.07);
+  transition: border-color .4s, transform .4s, box-shadow .4s; cursor: none;
+}
+.tm-card:hover { border-color: rgba(200,169,110,.28); transform: translateY(-6px); box-shadow: 0 22px 64px rgba(0,0,0,.45); }
+.tm-photo { aspect-ratio: 3/4; overflow: hidden; position: relative; background: var(--ink-3); }
+.tm-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(15%); transition: transform .55s ease, filter .55s; }
+.tm-card:hover .tm-photo img { transform: scale(1.04); filter: grayscale(0%); }
+.tm-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 45%; background: linear-gradient(to top, rgba(13,13,14,.75), transparent); }
+.tm-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; color: rgba(200,169,110,.14); }
+.tm-info { padding: 1.5rem 1.75rem 2rem; }
+.tm-name { font-size: 1.05rem; font-weight: 500; margin-bottom: .22rem; }
+.tm-role { font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: .85rem; }
+.tm-bio { font-size: .82rem; color: rgba(250,248,244,.42); line-height: 1.77; }
+.tm-langs { display: flex; gap: .4rem; margin-top: .9rem; flex-wrap: wrap; }
+.tm-lang { font-size: .66rem; padding: .22rem .65rem; border-radius: 99px; border: 1px solid rgba(200,169,110,.2); color: var(--muted); letter-spacing: .07em; }
+
+/* ─── YOUTH ─── */
+.youth { background: var(--ink-2); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.youth-content h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.4rem; }
+.youth-content h2 em { font-style: italic; color: var(--gold-light); }
+.youth-content p { font-size: .92rem; color: rgba(250,248,244,.5); line-height: 1.85; font-weight: 300; margin-bottom: 1rem; }
+.scenarios { display: flex; flex-direction: column; gap: .7rem; margin: 1.8rem 0; }
+.sc {
+  background: var(--ink-3); border-radius: var(--r-sm); padding: 1.2rem 1.5rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+  border-left: 2px solid transparent; transition: border-color .3s, background .3s; cursor: none;
+}
+.sc:hover { border-color: var(--gold); background: #1e1d1b; }
+.sc-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+.sc-title { font-size: .87rem; font-weight: 500; margin-bottom: .22rem; }
+.sc-desc { font-size: .79rem; color: rgba(250,248,244,.4); line-height: 1.65; }
+/* Youth visual — real image background */
+.youth-visual {
+  border-radius: var(--r); overflow: hidden; position: relative; min-height: 520px;
+}
+.youth-visual-bg {
+  position: absolute; inset: 0;
+  background: url('https://willfordlawcorp.com/wp-content/uploads/2025/06/image14.jpg') center / cover no-repeat;
+}
+.youth-visual-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,13,14,.97) 0%, rgba(13,13,14,.6) 50%, rgba(13,13,14,.35) 100%);
+}
+.youth-visual-content { position: relative; z-index: 1; padding: 3rem; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; min-height: 520px; }
+.youth-big { font-family: 'Cormorant Garamond', serif; font-size: 7rem; font-weight: 300; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(200,169,110,.3); }
+.youth-visual h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 300; margin: .3rem 0 .7rem; }
+.youth-visual p { font-size: .84rem; color: rgba(250,248,244,.45); line-height: 1.7; margin-bottom: 1.5rem; }
+.youth-tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+.y-tag { background: rgba(200,169,110,.1); border: 1px solid rgba(200,169,110,.22); color: var(--gold-light); font-size: .68rem; padding: .35rem .85rem; border-radius: 99px; letter-spacing: .07em; }
+
+/* ─── CONTACT ─── */
+.contact { background: var(--ink); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+.contact-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.8vw, 3.4rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.3rem; }
+.contact-left h2 em { font-style: italic; color: var(--gold-light); }
+.contact-left > p { font-size: .92rem; color: rgba(250,248,244,.48); line-height: 1.85; margin-bottom: 2.5rem; font-weight: 300; }
+.c-info { display: flex; flex-direction: column; gap: 1.2rem; }
+.c-info-item { display: flex; align-items: center; gap: 1rem; }
+.c-icon {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+  border: 1px solid rgba(200,169,110,.22); display: flex; align-items: center; justify-content: center;
+  font-size: .95rem; transition: background .3s, border-color .3s;
+}
+.c-info-item:hover .c-icon { background: rgba(200,169,110,.1); border-color: var(--gold); }
+.c-info-label { font-size: .67rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.c-info-val { font-size: .93rem; margin-top: .18rem; }
+/* Contact visual below info */
+.contact-visual {
+  margin-top: 2.5rem; border-radius: var(--r); overflow: hidden; height: 220px; position: relative;
+}
+.contact-visual img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(20%) brightness(.75); }
+.contact-visual::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(120deg, rgba(13,13,14,.5), transparent);
+}
+.contact-form { display: flex; flex-direction: column; gap: .9rem; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+.f-field { display: flex; flex-direction: column; gap: .38rem; }
+.f-field label { font-size: .67rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.f-field input, .f-field textarea, .f-field select {
+  background: var(--ink-2); border: 1px solid rgba(200,169,110,.12);
+  border-radius: var(--r-sm); padding: .82rem 1.05rem;
+  color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: .88rem;
+  outline: none; resize: none; transition: border-color .3s, box-shadow .3s;
+  -webkit-appearance: none;
+}
+.f-field input:focus, .f-field textarea:focus, .f-field select:focus {
+  border-color: rgba(200,169,110,.48); box-shadow: 0 0 0 3px rgba(200,169,110,.07);
+}
+.f-field select option { background: var(--ink-2); }
+.f-field textarea { min-height: 120px; }
+.f-submit {
+  background: var(--gold); color: var(--ink); padding: 1rem 2rem; border-radius: 99px;
+  border: none; font-family: 'DM Sans', sans-serif; font-size: .82rem;
+  font-weight: 500; letter-spacing: .09em; text-transform: uppercase; cursor: none;
+  align-self: flex-start; transition: background .3s, box-shadow .3s, transform .25s;
+}
+.f-submit:hover { background: var(--gold-light); box-shadow: 0 8px 32px rgba(200,169,110,.38); transform: translateY(-2px); }
+.f-note { font-size: .69rem; color: rgba(250,248,244,.22); line-height: 1.65; margin-top: .1rem; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--ink-3); padding: 5rem 4rem 3rem; border-top: 1px solid rgba(200,169,110,.1); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+.footer-brand img { height: 30px; filter: brightness(0) invert(1); opacity: .75; display: block; margin-bottom: 1.1rem; }
+.footer-brand p { font-size: .82rem; color: rgba(250,248,244,.35); line-height: 1.8; max-width: 260px; }
+.f-col h4 { font-size: .67rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+.f-col a { display: block; font-size: .83rem; color: rgba(250,248,244,.4); text-decoration: none; margin-bottom: .65rem; transition: color .3s; }
+.f-col a:hover { color: var(--gold-light); }
+.socials { display: flex; gap: .75rem; margin-top: 1rem; }
+.social-a {
+  width: 35px; height: 35px; border-radius: 50%;
+  border: 1px solid rgba(200,169,110,.2); display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: .77rem; text-decoration: none;
+  transition: border-color .3s, color .3s, background .3s;
+}
+.social-a:hover { border-color: var(--gold); color: var(--gold); background: rgba(200,169,110,.08); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid rgba(250,248,244,.05); flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: .7rem; color: rgba(250,248,244,.2); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: .7rem; color: rgba(250,248,244,.22); text-decoration: none; transition: color .3s; }
+.footer-links a:hover { color: var(--gold); }
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .72s ease, transform .72s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: .08s; } .d2 { transition-delay: .16s; } .d3 { transition-delay: .24s; } .d4 { transition-delay: .32s; } .d5 { transition-delay: .4s; }
+
+/* ─── KEYFRAMES ─── */
+@keyframes slideUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pulse { 0%,100% { opacity: .3; transform: scaleY(.6); } 50% { opacity: 1; transform: scaleY(1); } }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  nav { padding: 1.2rem 2rem; } nav.scrolled { padding: .85rem 2rem; } .nav-links { display: none; }
+  section { padding: 5rem 2rem; } .hero { padding: 0 2rem 5rem; }
+  .hero-portrait { width: 100%; opacity: .15; }
+  .hero-portrait::before { background: linear-gradient(to right, var(--ink) 0%, rgba(13,13,14,.5) 100%), linear-gradient(to top, var(--ink) 0%, transparent 30%); }
+  .hero-stats { right: 2rem; }
+  .pillars-head, .results-top, .team-head { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  .pillars-head p, .results-top p, .team-head p { text-align: left; max-width: 100%; }
+  .pillars-grid, .practice-grid, .results-grid, .t-grid, .team-grid { grid-template-columns: 1fr; }
+  .t-card.featured { grid-column: span 1; }
+  .about, .youth, .contact { grid-template-columns: 1fr; gap: 3rem; }
+  .about-badge { right: 1rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .f-row { grid-template-columns: 1fr; }
+  .media-inner { flex-direction: column; align-items: flex-start; }
+  .trust-bar { flex-wrap: wrap; gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<a href="#contact" class="float-cta">Free Consultation ↗</a>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="https://willfordlawcorp.com/wp-content/uploads/2025/05/Group-1.svg.svg" alt="Willford Law Corporation">
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#practice">Practice Areas</a>
+    <a href="#results">Results</a>
+    <a href="#team">Our Team</a>
+    <a href="#testimonials">Clients</a>
+    <a href="#contact" class="nav-cta">Free Consultation</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-bg-img" id="heroBg"></div>
+  <div class="hero-portrait">
+    <img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/image8.jpg" alt="Tom Willford — Trial Attorney" id="heroPortrait">
+  </div>
+
+  <div class="hero-content">
+    <div class="eyebrow"><span>Santa Ana, California · Personal Injury Law</span></div>
+    <h1>Where There's <em>a Willford,</em><br>There's a Way.</h1>
+    <p class="hero-sub">Personal injury attorneys who fight for those who can't fight alone — with over 30 years of litigation experience and tens of millions recovered.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-gold">Get Free Consultation</a>
+      <a href="#about" class="btn-ghost">Meet Tom Willford</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div><div class="stat-num">$10M+</div><div class="stat-label">Recovered</div></div>
+    <div><div class="stat-num">32 yrs</div><div class="stat-label">Litigation</div></div>
+    <div><div class="stat-num">1,000+</div><div class="stat-label">Clients served</div></div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div class="trust-bar">
+  <div class="trust-item"><div class="trust-num">32</div><div class="trust-text">Years of litigation experience</div></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-num">$10M+</div><div class="trust-text">Recovered for clients</div></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-num">1,000+</div><div class="trust-text">Cases successfully handled</div></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-num">5</div><div class="trust-text">CA Federal &amp; State court admissions</div></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-num">$0</div><div class="trust-text">Upfront cost — no win, no fee</div></div>
+</div>
+
+<!-- ── PILLARS ── -->
+<section class="pillars" id="why">
+  <div class="pillars-head reveal">
+    <div>
+      <div class="s-label"><span>Why clients choose us</span></div>
+      <h2>Experience, Honesty<br>&amp; <em>Passion</em> When<br>It Matters Most</h2>
+    </div>
+    <p>A client-first legal team. When you're hurt and overwhelmed, you deserve more than a lawyer — you deserve a fighter.</p>
+  </div>
+  <div class="pillars-grid">
+    <div class="p-card reveal d1"><div class="p-num">01</div><div class="p-title">30+ Years of Litigation</div><div class="p-text">Tom Willford has been trying cases for over three decades. Litigation is his specialty — and your best advantage in court.</div></div>
+    <div class="p-card reveal d2"><div class="p-num">02</div><div class="p-title">No Win, No Fee</div><div class="p-text">Zero upfront costs. You pay nothing unless we win. We put our money where our mouth is — and we fight like it.</div></div>
+    <div class="p-card reveal d3"><div class="p-num">03</div><div class="p-title">Cases Others Won't Touch</div><div class="p-text">We take on complex, rejected, and difficult cases that other firms turn away. Your story deserves to be heard.</div></div>
+    <div class="p-card reveal d1"><div class="p-num">04</div><div class="p-title">Maximum Case Recovery</div><div class="p-text">We calculate the full value of your claim based on real evidence — not what the insurance company wants to pay.</div></div>
+    <div class="p-card reveal d2"><div class="p-num">05</div><div class="p-title">Bilingual Legal Team</div><div class="p-text">We speak your language — literally. Our diverse team serves Spanish-speaking clients with the same level of excellence.</div></div>
+    <div class="p-card reveal d3"><div class="p-num">06</div><div class="p-title">Court-Ready Reputation</div><div class="p-text">Insurance companies know which attorneys go to court. They know our name — and that changes everything for your case.</div></div>
+  </div>
+</section>
+
+<!-- ── ABOUT TOM ── -->
+<section class="about" id="about">
+  <div class="about-img-wrap reveal">
+    <div class="about-gold-bar"></div>
+    <img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/image8.jpg" alt="Thomas M. Willford — Trial Attorney">
+    <div class="about-badge">
+      <div class="about-badge-num">32</div>
+      <div class="about-badge-label">Years Fighting<br>for Clients</div>
+    </div>
+  </div>
+  <div class="about-content">
+    <div class="s-label reveal"><span>About Tom Willford</span></div>
+    <h2 class="reveal">Law Is In<br><em>His Blood.</em></h2>
+    <p class="reveal">Tom Willford didn't stumble into law — he was born into it. His father and uncle founded Willford &amp; Willford in the 1950s. His cousin practiced for 40 years in Whittier. For Tom, this isn't a career. It's a calling passed down through generations.</p>
+    <p class="reveal">With 32 years of litigation across state and federal courts, Tom has seen every tactic insurance companies use to minimize your claim. He knows exactly how to stop them — because he's a rider himself who understands what it feels like to be on the road.</p>
+    <blockquote class="about-quote reveal">"When you're hurt and overwhelmed, you need more than a lawyer. You need a fighter who truly understands."</blockquote>
+    <div class="about-creds reveal">
+      <div><div class="cred-num">32</div><div class="cred-label">Years litigating</div></div>
+      <div><div class="cred-num">5</div><div class="cred-label">Court districts</div></div>
+      <div><div class="cred-num">$10M+</div><div class="cred-label">Recovered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRACTICE AREAS ── -->
+<section class="practice" id="practice">
+  <div class="s-label dark reveal"><span>What we handle</span></div>
+  <h2 class="reveal">Every Case We Take On,<br>We Take <em>Seriously.</em></h2>
+  <div class="practice-grid">
+    <div class="pr-card reveal d1">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/07/image221.jpg" alt="Car Accidents"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Car &amp; Truck Accidents</h3><p>From fender-benders to catastrophic freeway crashes — we handle every vehicle collision case with full force.</p></div>
+    </div>
+    <div class="pr-card reveal d2">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/07/image23.jpg" alt="Rideshare Accidents"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Rideshare, Uber &amp; Lyft</h3><p>Your rights don't depend on what you were riding in. Rideshare accidents are covered — we handle the complexity.</p></div>
+    </div>
+    <div class="pr-card reveal d3">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/fatal-motorcycle-accident-1024x682.jpg" alt="Motorcycle Accidents"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Motorcycle Accidents</h3><p>Tom is a rider himself. He knows how riders are wrongly blamed — and exactly how to prove it.</p></div>
+    </div>
+    <div class="pr-card reveal d4">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/07/image24.jpg" alt="Truck Accidents"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Truck Accidents</h3><p>Commercial truck crashes involve multiple parties and strict federal regulations. We know every rule.</p></div>
+    </div>
+    <div class="pr-card reveal d1">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/07/image26.jpg" alt="Bicycle &amp; Scooter Accidents"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Bicycle &amp; Scooter Accidents</h3><p>E-bikes, scooters, cyclists — you have rights on the road and we will enforce them aggressively.</p></div>
+    </div>
+    <div class="pr-card reveal d2">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/image10.jpg" alt="Premises Liability"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Premises Liability</h3><p>Slip and falls, unsafe venues, dog bites — property owners must be held responsible for their negligence.</p></div>
+    </div>
+    <div class="pr-card reveal d3">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/07/Wrongful-Death.jpg" alt="Wrongful Death"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Wrongful Death</h3><p>When negligence takes someone you love, we pursue justice with care, urgency, and full commitment.</p></div>
+    </div>
+    <div class="pr-card reveal d4">
+      <div class="pr-img"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/closeup-of-brain-mri-scan-result-1024x702.jpg" alt="Catastrophic Injuries"></div>
+      <div class="pr-body"><div class="pr-arrow">↗</div><h3>Catastrophic &amp; Brain Injuries</h3><p>Life-altering injuries deserve life-changing compensation. We never settle for less than you deserve.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESULTS ── -->
+<section class="results" id="results">
+  <div class="results-top reveal">
+    <div>
+      <div class="s-label"><span>Track record</span></div>
+      <h2>Proven Results<br>That <em>Speak.</em></h2>
+    </div>
+    <p>Past results don't guarantee future outcomes — but they show what's possible with the right team.</p>
+  </div>
+  <div class="results-grid">
+    <div class="r-card reveal d1">
+      <div class="r-card-bg" style="background-image: url('https://willfordlawcorp.com/wp-content/uploads/2025/06/closeup-of-brain-mri-scan-result-1024x702.jpg')"></div>
+      <div class="r-card-overlay"></div>
+      <div class="r-card-content">
+        <div class="r-amount">$1.7M</div>
+        <div class="r-type">Brain Injury Settlement</div>
+        <div class="r-desc">Client suffered traumatic brain injury in a vehicle collision. Full compensation secured including long-term care and lost earning capacity.</div>
+      </div>
+    </div>
+    <div class="r-card reveal d2">
+      <div class="r-card-bg" style="background-image: url('https://willfordlawcorp.com/wp-content/uploads/2025/06/crashed-car-after-traffic-accident-on-road.jpg')"></div>
+      <div class="r-card-overlay"></div>
+      <div class="r-card-content">
+        <div class="r-amount">$1.5M</div>
+        <div class="r-type">Car Accident Settlement</div>
+        <div class="r-desc">Multi-vehicle collision on I-5. Serious orthopaedic injuries. Fought the insurance company's lowball offer all the way.</div>
+      </div>
+    </div>
+    <div class="r-card reveal d3">
+      <div class="r-card-bg" style="background-image: url('https://willfordlawcorp.com/wp-content/uploads/2025/07/Wrongful-Death.jpg')"></div>
+      <div class="r-card-overlay"></div>
+      <div class="r-card-content">
+        <div class="r-amount">$1.0M</div>
+        <div class="r-type">Wrongful Death Settlement</div>
+        <div class="r-desc">Family devastated by a preventable accident. We secured justice and meaningful compensation to help rebuild their lives.</div>
+      </div>
+    </div>
+  </div>
+  <p class="results-note reveal">Results shown are past case results. Every case is different and results depend on specific facts and legal claims. Prior results do not guarantee or predict similar outcomes in future cases.</p>
+</section>
+
+<!-- ── MEDIA STRIP ── -->
+<section class="media-strip" id="media" style="padding: 0;">
+  <div class="media-inner" style="padding: 5.5rem 4rem;">
+    <div class="media-left">
+      <div class="s-label dark reveal"><span>In the media</span></div>
+      <h2 class="reveal">Tom Willford Is Building<br>a <em>Voice</em> for Those<br>Without One.</h2>
+      <p class="reveal">Podcast appearances, legal commentary, and media features are coming. Follow along as Tom builds a platform for everyday people to understand their rights.</p>
+      <div class="media-badges reveal">
+        <span class="mbadge">🎙 Podcast — Coming Soon</span>
+        <span class="mbadge">📺 YouTube — Coming Soon</span>
+        <span class="mbadge">📱 Instagram — Follow Now</span>
+      </div>
+    </div>
+    <div class="media-right reveal">
+      <a href="#contact" class="btn-gold" style="background: var(--ink); color: var(--gold);">Notify Me at Launch ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials" id="testimonials">
+  <div class="s-label reveal"><span>Client stories</span></div>
+  <h2 class="reveal">Real People.<br><em>Real Results.</em></h2>
+  <div class="t-grid">
+    <div class="t-card featured reveal d1">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"</div>
+      <p class="t-text">Tom Willford went above and beyond to make sure we got the best settlement possible. He was clear, supportive, and truly knew how to handle every step of the process. Thanks to him, we felt protected and confident the entire time. If you need someone who will fight for you after a car accident, Tom is the one to call.</p>
+      <div class="t-author">
+        <div class="t-avatar"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/unnamed-2.png" alt="Georgina Vasquez"></div>
+        <div><div class="t-name">Georgina Vasquez</div><div class="t-role">Car Accident Client</div></div>
+      </div>
+    </div>
+    <div class="t-card reveal d2">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"</div>
+      <p class="t-text">I was t-boned in Santa Ana while in California for business. Tom and his team were professional, responsive, and truly had my back from day one. The process was smooth and they fought hard for a great settlement.</p>
+      <div class="t-author">
+        <div class="t-avatar"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/unnamed-6.png" alt="David Andrews"></div>
+        <div><div class="t-name">David Andrews</div><div class="t-role">Car Accident Client</div></div>
+      </div>
+    </div>
+    <div class="t-card reveal d1">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"</div>
+      <p class="t-text">Tom, Tracey, Sue and Hansen work very smart and hard for their clients. I have 2 cases with them currently and the experience has been outstanding. These guys work tirelessly and are passionate about their commitments.</p>
+      <div class="t-author">
+        <div class="t-avatar"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/unnamed.png" alt="Ajjaay Ramchanddani"></div>
+        <div><div class="t-name">Ajjaay Ramchanddani</div><div class="t-role">Personal Injury Client</div></div>
+      </div>
+    </div>
+    <div class="t-card reveal d2">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"</div>
+      <p class="t-text">The team made sure I was ok and helped me through every legal procedure. It was my first time in this situation and they gave me time to understand everything. I felt really comfortable — can't thank them enough.</p>
+      <div class="t-author">
+        <div class="t-avatar"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/unnamed-4.png" alt="Alexis Ramirez"></div>
+        <div><div class="t-name">Alexis Ramirez</div><div class="t-role">Car Accident Client</div></div>
+      </div>
+    </div>
+    <div class="t-card reveal d3">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"</div>
+      <p class="t-text">Ask for Tracy! She helped me and my stepsister get the best settlement and was very professional. Questions via text or email were answered right away. I would use these guys again!</p>
+      <div class="t-author">
+        <div class="t-avatar"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/unnamed-5.png" alt="Jason Dionne"></div>
+        <div><div class="t-name">Jason Dionne</div><div class="t-role">Settlement Client</div></div>
+      </div>
+    </div>
+    <div class="t-card reveal d4">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"</div>
+      <p class="t-text">The Willford law group has an amazing team of smart, strong individuals who take such good care of their clients. Thank you Brittany!</p>
+      <div class="t-author">
+        <div class="t-avatar"><img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/unnamed-7.png" alt="Matthew Lacy"></div>
+        <div><div class="t-name">Matthew Lacy</div><div class="t-role">Personal Injury Client</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section class="team" id="team">
+  <div class="team-head reveal">
+    <div>
+      <div class="s-label"><span>Our people</span></div>
+      <h2>The Team Behind<br><em>Every Win.</em></h2>
+    </div>
+    <p>Every member of our firm is personally invested in your outcome — from intake to verdict.</p>
+  </div>
+  <div class="team-grid">
+    <div class="tm-card reveal d1">
+      <div class="tm-photo">
+        <img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/image8.jpg" alt="Thomas M. Willford">
+        <div class="tm-fade"></div>
+      </div>
+      <div class="tm-info">
+        <div class="tm-name">Thomas M. Willford</div>
+        <div class="tm-role">Trial Attorney &amp; Owner</div>
+        <div class="tm-bio">32 years of litigation across state and federal courts. Personal injury is his passion — and law is in his blood. His father and uncle founded Willford &amp; Willford in the 1950s.</div>
+        <div class="tm-langs"><span class="tm-lang">English</span><span class="tm-lang">Spanish</span></div>
+      </div>
+    </div>
+    <div class="tm-card reveal d2">
+      <div class="tm-photo">
+        <img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/Kassandra-Preciado-111.png" alt="Kassandra Preciado">
+        <div class="tm-fade"></div>
+      </div>
+      <div class="tm-info">
+        <div class="tm-name">Kassandra Preciado</div>
+        <div class="tm-role">Litigation Paralegal &amp; Case Manager</div>
+        <div class="tm-bio">A certified paralegal and trusted firm veteran. Kassandra manages medical records, settlement demands, discovery, and trial binders — your primary point of contact throughout your case.</div>
+        <div class="tm-langs"><span class="tm-lang">English</span><span class="tm-lang">Spanish</span></div>
+      </div>
+    </div>
+    <div class="tm-card reveal d3">
+      <div class="tm-photo"><div class="tm-placeholder">SI</div><div class="tm-fade"></div></div>
+      <div class="tm-info">
+        <div class="tm-name">Silvia Inocencio</div>
+        <div class="tm-role">Paralegal &amp; Intake Specialist</div>
+        <div class="tm-bio">Silvia is often the first voice you hear. She guides clients through intake, coordinates medical wrap-up, and ensures every packet is ready for settlement demands — with warmth and precision.</div>
+        <div class="tm-langs"><span class="tm-lang">English</span><span class="tm-lang">Spanish</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── YOUTH / KNOW YOUR RIGHTS ── -->
+<section class="youth" id="rights">
+  <div class="youth-content">
+    <div class="s-label reveal"><span>Know your rights</span></div>
+    <h2 class="reveal">You Don't Need<br>Money to Get <em>Justice.</em></h2>
+    <p class="reveal">A lot of young people think lawyers are only for people with money. That's exactly what insurance companies want you to believe. At Willford Law, you pay nothing unless we win — and we fight just as hard for everyone.</p>
+    <div class="scenarios reveal">
+      <div class="sc"><div class="sc-icon">🛵</div><div><div class="sc-title">Hit while on an e-scooter or bike?</div><div class="sc-desc">You have rights. The driver's insurance should cover your medical bills, lost income, and more.</div></div></div>
+      <div class="sc"><div class="sc-icon">🚘</div><div><div class="sc-title">Passenger in an Uber or Lyft accident?</div><div class="sc-desc">Rideshare accidents are covered. Don't let multiple insurance policies intimidate you.</div></div></div>
+      <div class="sc"><div class="sc-icon">🏠</div><div><div class="sc-title">Hurt at an apartment complex or business?</div><div class="sc-desc">Property owners are legally responsible for maintaining safe conditions. That's the law.</div></div></div>
+      <div class="sc"><div class="sc-icon">📱</div><div><div class="sc-title">Not sure if you even have a case?</div><div class="sc-desc">Call or text us. Free consultation, zero pressure, no commitment required.</div></div></div>
+    </div>
+  </div>
+  <div class="youth-visual reveal d2">
+    <div class="youth-visual-bg"></div>
+    <div class="youth-visual-content">
+      <div class="youth-big">$0</div>
+      <h3>Upfront to start<br>your case.</h3>
+      <p>We work on contingency — we only get paid when you win. No hidden fees. No surprises. Ever.</p>
+      <div class="youth-tags">
+        <span class="y-tag">No upfront cost</span>
+        <span class="y-tag">Free consultation</span>
+        <span class="y-tag">Text-friendly</span>
+        <span class="y-tag">Bilingual team</span>
+        <span class="y-tag">CA statewide</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <div class="s-label reveal"><span>Get started</span></div>
+    <h2 class="reveal">Let's Get<br><em>Your Case Started.</em></h2>
+    <p class="reveal">Tell us what happened. We'll review your case for free, with no obligation. Most clients hear back within a few hours.</p>
+    <div class="c-info reveal">
+      <div class="c-info-item"><div class="c-icon">📞</div><div><div class="c-info-label">Call or text</div><div class="c-info-val">(714) 975-5777</div></div></div>
+      <div class="c-info-item"><div class="c-icon">✉</div><div><div class="c-info-label">Email</div><div class="c-info-val">info@willfordlawcorp.com</div></div></div>
+      <div class="c-info-item"><div class="c-icon">📍</div><div><div class="c-info-label">Office</div><div class="c-info-val">4 Hutton Centre Dr., Suite 660<br>Santa Ana, CA 92707</div></div></div>
+    </div>
+    <div class="contact-visual reveal">
+      <img src="https://willfordlawcorp.com/wp-content/uploads/2025/06/image16.jpg" alt="Willford Law Corporation Office">
+    </div>
+  </div>
+  <div class="reveal d2">
+    <form class="contact-form" onsubmit="return false;">
+      <div class="f-row">
+        <div class="f-field"><label>First name</label><input type="text" placeholder="Alex"></div>
+        <div class="f-field"><label>Last name</label><input type="text" placeholder="Martinez"></div>
+      </div>
+      <div class="f-row">
+        <div class="f-field"><label>Phone</label><input type="tel" placeholder="(714) 555-0100"></div>
+        <div class="f-field"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+      </div>
+      <div class="f-field">
+        <label>Type of case</label>
+        <select>
+          <option value="">Select one...</option>
+          <option>Car accident</option>
+          <option>Motorcycle accident</option>
+          <option>Rideshare (Uber/Lyft) accident</option>
+          <option>Bicycle or scooter accident</option>
+          <option>Truck accident</option>
+          <option>Premises / slip and fall</option>
+          <option>Wrongful death</option>
+          <option>Brain or catastrophic injury</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="f-field">
+        <label>Tell us what happened</label>
+        <textarea placeholder="Briefly describe your situation — when it happened, how you were injured, and anything else that feels important. There's no wrong way to start."></textarea>
+      </div>
+      <button type="submit" class="f-submit">Send My Free Case Review →</button>
+      <p class="f-note">By submitting, you consent to receive communications from Willford Law Corporation. No attorney-client relationship is formed until a signed agreement is in place. You may opt out at any time.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://willfordlawcorp.com/wp-content/uploads/2025/05/Group-1.svg.svg" alt="Willford Law Corporation">
+      <p>A California-based personal injury firm with over 30 years of litigation experience and a legacy rooted in family, advocacy, and results.</p>
+    </div>
+    <div class="f-col">
+      <h4>Practice Areas</h4>
+      <a href="https://willfordlawcorp.com/car-accident-attorney-santa-ana/">Car Accidents</a>
+      <a href="https://willfordlawcorp.com/motorcycle-accident-attorney-santa-ana/">Motorcycle Accidents</a>
+      <a href="https://willfordlawcorp.com/uber-accident-attorney-santa-ana/">Rideshare Accidents</a>
+      <a href="https://willfordlawcorp.com/wrongful-death/">Wrongful Death</a>
+      <a href="https://willfordlawcorp.com/serious-catastrophic-injuries/">Brain Injuries</a>
+      <a href="https://willfordlawcorp.com/government-claims/">Government Claims</a>
+    </div>
+    <div class="f-col">
+      <h4>Company</h4>
+      <a href="https://willfordlawcorp.com/our-firm/">About Tom Willford</a>
+      <a href="https://willfordlawcorp.com/case-studies/">Case Studies</a>
+      <a href="https://willfordlawcorp.com/testimonials/">Testimonials</a>
+      <a href="https://willfordlawcorp.com/blog/">Blog</a>
+      <a href="#">Media &amp; Press</a>
+      <a href="https://willfordlawcorp.com/es/">Español</a>
+    </div>
+    <div class="f-col">
+      <h4>Contact</h4>
+      <a href="tel:+17149755777">(714) 975-5777</a>
+      <a href="mailto:info@willfordlawcorp.com">info@willfordlawcorp.com</a>
+      <a href="https://maps.app.goo.gl/nDpZ4hDFejeCVP2R8">4 Hutton Centre Dr., Suite 660<br>Santa Ana, CA 92707</a>
+      <div class="socials">
+        <a href="https://www.instagram.com/willfordlawcorporation/" class="social-a">ig</a>
+        <a href="https://www.linkedin.com/in/tom-willford-b8818534/" class="social-a">in</a>
+        <a href="https://www.facebook.com/WillfordLawCorporation/" class="social-a">fb</a>
+        <a href="https://www.yelp.com/biz/willford-law-corporation-santa-ana-7" class="social-a">yl</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Willford Law Corporation. All rights reserved. Attorney advertising. Prior results do not guarantee a similar outcome.</p>
+    <div class="footer-links">
+      <a href="https://willfordlawcorp.com/privacy-policy/">Privacy Policy</a>
+      <a href="https://willfordlawcorp.com/terms-of-use/">Terms of Use</a>
+      <a href="https://willfordlawcorp.com/disclaimer/">Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR
+const cur = document.getElementById('cur');
+const curR = document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function ani() {
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  rx+=(mx-rx)*.13; ry+=(my-ry)*.13;
+  curR.style.left=rx+'px'; curR.style.top=ry+'px';
+  requestAnimationFrame(ani);
+})();
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+});
+
+// ── SCROLLED NAV + PARALLAX
+const nav = document.getElementById('nav');
+const heroBg = document.getElementById('heroBg');
+const heroPortrait = document.getElementById('heroPortrait');
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  nav.classList.toggle('scrolled', sy > 60);
+  if (heroBg) heroBg.style.transform = `scale(1.06) translateY(${sy * 0.12}px)`;
+  if (heroPortrait) heroPortrait.style.transform = `translateY(${sy * 0.16}px)`;
+}, { passive: true });
+
+// ── SCROLL REVEAL
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── 3D TILT on cards
+function tilt(selector, strength=5) {
+  document.querySelectorAll(selector).forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5;
+      const y = (e.clientY - r.top) / r.height - .5;
+      card.style.transform = `perspective(700px) rotateY(${x*strength}deg) rotateX(${-y*strength}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+}
+tilt('.p-card', 4);
+tilt('.pr-card', 6);
+tilt('.t-card', 5);
+tilt('.tm-card', 4);
+tilt('.r-card', 4);
+</script>
+</body>
+</html>
