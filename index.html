@@ -160,13 +160,81 @@ nav.scrolled {
 .trust-bar {
   background: var(--ink-2); border-top: 1px solid rgba(200,169,110,.08);
   border-bottom: 1px solid rgba(200,169,110,.08);
-  padding: 2rem 4rem; display: flex; align-items: center; gap: 3rem;
-  overflow: hidden;
+  padding: 1.75rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: nowrap; overflow-x: auto;
+  scrollbar-width: none;
 }
-.trust-item { display: flex; align-items: center; gap: .9rem; flex-shrink: 0; }
-.trust-num { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 500; color: var(--gold); }
-.trust-text { font-size: .75rem; color: rgba(250,248,244,.45); line-height: 1.45; max-width: 120px; }
-.trust-divider { width: 1px; height: 36px; background: rgba(200,169,110,.15); flex-shrink: 0; }
+.trust-bar::-webkit-scrollbar { display: none; }
+.trust-item { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; min-width: 0; }
+.trust-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 500; color: var(--gold); white-space: nowrap; }
+.trust-text { font-size: clamp(.62rem, 1vw, .75rem); color: rgba(250,248,244,.45); line-height: 1.45; max-width: 110px; }
+.trust-divider { width: 1px; height: 32px; background: rgba(200,169,110,.15); flex-shrink: 0; }
+
+/* ─── MEDIA SECTION ─── */
+.media-section { background: var(--ink); padding: 6rem 4rem; }
+.media-section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem; }
+.media-section-head h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.1; }
+.media-section-head h2 em { font-style: italic; color: var(--gold-light); }
+.media-section-head p { max-width: 300px; font-size: .87rem; color: rgba(250,248,244,.45); line-height: 1.75; text-align: right; }
+/* Video window */
+.media-video-wrap {
+  position: relative; width: 100%; border-radius: var(--r-lg);
+  overflow: hidden; background: var(--ink-3);
+  border: 1px solid rgba(200,169,110,.18);
+  box-shadow: 0 24px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(200,169,110,.08);
+  aspect-ratio: 16/9;
+  margin-bottom: 2rem;
+}
+.media-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+/* Coming soon overlay — shown when no video is set */
+.media-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,169,110,.07) 0%, transparent 70%),
+              var(--ink-3);
+  gap: 1.25rem;
+}
+.media-placeholder-icon { font-size: 3.5rem; opacity: .35; }
+.media-placeholder-text { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: rgba(250,248,244,.3); letter-spacing: .04em; }
+.media-placeholder-sub { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,169,110,.4); }
+.media-placeholder-ring {
+  position: absolute; width: 160px; height: 160px; border-radius: 50%;
+  border: 1px solid rgba(200,169,110,.1); animation: ringPulse 3s ease-in-out infinite;
+}
+.media-placeholder-ring-2 {
+  position: absolute; width: 260px; height: 260px; border-radius: 50%;
+  border: 1px solid rgba(200,169,110,.05); animation: ringPulse 3s ease-in-out infinite .5s;
+}
+@keyframes ringPulse { 0%,100% { transform: scale(.95); opacity: .5; } 50% { transform: scale(1.05); opacity: 1; } }
+/* Gold border glow on hover */
+.media-video-wrap:hover { border-color: rgba(200,169,110,.38); box-shadow: 0 24px 80px rgba(0,0,0,.6), 0 0 32px rgba(200,169,110,.12); transition: border-color .4s, box-shadow .4s; }
+/* Social links row */
+.media-socials { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.media-social-link {
+  display: flex; align-items: center; gap: .65rem;
+  background: var(--ink-2); border: 1px solid rgba(200,169,110,.15);
+  border-radius: 99px; padding: .65rem 1.4rem;
+  text-decoration: none; color: rgba(250,248,244,.65);
+  font-size: .8rem; letter-spacing: .07em;
+  transition: border-color .3s, color .3s, background .3s, transform .25s, box-shadow .3s;
+  cursor: none;
+}
+.media-social-link:hover { border-color: var(--gold); color: var(--gold-light); background: rgba(200,169,110,.07); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(200,169,110,.15); }
+.media-social-icon { font-size: 1rem; }
+.media-social-link.yt { border-color: rgba(255,0,0,.2); }
+.media-social-link.yt:hover { border-color: rgba(255,0,0,.6); color: #ff4444; background: rgba(255,0,0,.06); box-shadow: 0 6px 24px rgba(255,0,0,.1); }
+.media-social-link.ig:hover { border-color: rgba(225,48,108,.5); color: #e1306c; background: rgba(225,48,108,.06); box-shadow: 0 6px 24px rgba(225,48,108,.1); }
+.media-social-link.fb:hover { border-color: rgba(24,119,242,.5); color: #1877f2; background: rgba(24,119,242,.06); }
+.media-social-link.li:hover { border-color: rgba(10,102,194,.5); color: #0a66c2; background: rgba(10,102,194,.06); }
+.media-notify { margin-left: auto; }
+@media (max-width: 960px) {
+  .media-section { padding: 5rem 2rem; }
+  .media-section-head { flex-direction: column; align-items: flex-start; }
+  .media-section-head p { text-align: left; max-width: 100%; }
+  .media-notify { margin-left: 0; }
+  .trust-bar { padding: 1.5rem 2rem; justify-content: flex-start; }
+}
 
 /* ─── SECTION UTILITIES ─── */
 section { padding: 8rem 4rem; }
@@ -272,18 +340,6 @@ section { padding: 8rem 4rem; }
 .r-type { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,248,244,.5); margin: .4rem 0 .8rem; }
 .r-desc { font-size: .82rem; color: rgba(250,248,244,.5); line-height: 1.7; }
 .results-note { font-size: .7rem; color: rgba(250,248,244,.2); line-height: 1.7; max-width: 560px; }
-
-/* ─── MEDIA STRIP ─── */
-.media-strip { background: var(--gold); padding: 5.5rem 4rem; }
-.media-inner { display: flex; justify-content: space-between; align-items: center; gap: 3rem; flex-wrap: wrap; }
-.media-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.2vw, 2.8rem); font-weight: 400; color: var(--ink); line-height: 1.1; margin-bottom: .75rem; }
-.media-left h2 em { font-style: italic; font-weight: 300; }
-.media-left p { font-size: .9rem; color: rgba(13,13,14,.6); max-width: 440px; line-height: 1.75; }
-.media-badges { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
-.mbadge { background: rgba(13,13,14,.12); border: 1px solid rgba(13,13,14,.2); color: var(--ink); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; padding: .5rem 1.1rem; border-radius: 99px; transition: background .3s; }
-.mbadge:hover { background: rgba(13,13,14,.22); }
-.media-right .btn-gold { background: var(--ink); color: var(--gold); }
-.media-right .btn-gold:hover { background: var(--ink-2); }
 
 /* ─── TESTIMONIALS ─── */
 .testimonials { background: var(--ink); }
@@ -526,6 +582,49 @@ footer { background: var(--ink-3); padding: 5rem 4rem 3rem; border-top: 1px soli
   <div class="trust-item"><div class="trust-num">$0</div><div class="trust-text">Upfront cost — no win, no fee</div></div>
 </div>
 
+<!-- ── MEDIA SECTION ── -->
+<section class="media-section" id="media">
+  <div class="media-section-head reveal">
+    <div>
+      <div class="s-label"><span>Media &amp; Press</span></div>
+      <h2>Watch. Listen.<br><em>Know Your Rights.</em></h2>
+    </div>
+    <p>Tom Willford is building a media presence to educate and empower everyday people. Videos, podcasts, and press features coming soon.</p>
+  </div>
+
+  <!-- Video window -->
+  <div class="media-video-wrap reveal">
+    <!-- SWAP THIS iframe src for a real YouTube embed when ready -->
+    <!-- Example: src="https://www.youtube.com/embed/VIDEO_ID?rel=0&autoplay=0" -->
+    <div class="media-placeholder">
+      <div class="media-placeholder-ring"></div>
+      <div class="media-placeholder-ring-2"></div>
+      <div class="media-placeholder-icon">▶</div>
+      <div class="media-placeholder-text">Coming Soon</div>
+      <div class="media-placeholder-sub">Tom Willford · Legal Insights</div>
+    </div>
+  </div>
+
+  <!-- Social links -->
+  <div class="media-socials reveal">
+    <a href="https://www.youtube.com/@willfordlaw" target="_blank" class="media-social-link yt">
+      <span class="media-social-icon">▶</span> YouTube
+    </a>
+    <a href="https://www.instagram.com/willfordlawcorporation/" target="_blank" class="media-social-link ig">
+      <span class="media-social-icon">◈</span> Instagram
+    </a>
+    <a href="https://www.facebook.com/WillfordLawCorporation/" target="_blank" class="media-social-link fb">
+      <span class="media-social-icon">f</span> Facebook
+    </a>
+    <a href="https://www.linkedin.com/in/tom-willford-b8818534/" target="_blank" class="media-social-link li">
+      <span class="media-social-icon">in</span> LinkedIn
+    </a>
+    <a href="#contact" class="media-social-link media-notify btn-gold" style="margin-left: auto; background: var(--gold); color: var(--ink); border-color: var(--gold);">
+      🔔 Notify Me When We Launch
+    </a>
+  </div>
+</section>
+
 <!-- ── PILLARS ── -->
 <section class="pillars" id="why">
   <div class="pillars-head reveal">
@@ -648,25 +747,6 @@ footer { background: var(--ink-3); padding: 5rem 4rem 3rem; border-top: 1px soli
     </div>
   </div>
   <p class="results-note reveal">Results shown are past case results. Every case is different and results depend on specific facts and legal claims. Prior results do not guarantee or predict similar outcomes in future cases.</p>
-</section>
-
-<!-- ── MEDIA STRIP ── -->
-<section class="media-strip" id="media" style="padding: 0;">
-  <div class="media-inner" style="padding: 5.5rem 4rem;">
-    <div class="media-left">
-      <div class="s-label dark reveal"><span>In the media</span></div>
-      <h2 class="reveal">Tom Willford Is Building<br>a <em>Voice</em> for Those<br>Without One.</h2>
-      <p class="reveal">Podcast appearances, legal commentary, and media features are coming. Follow along as Tom builds a platform for everyday people to understand their rights.</p>
-      <div class="media-badges reveal">
-        <span class="mbadge">🎙 Podcast — Coming Soon</span>
-        <span class="mbadge">📺 YouTube — Coming Soon</span>
-        <span class="mbadge">📱 Instagram — Follow Now</span>
-      </div>
-    </div>
-    <div class="media-right reveal">
-      <a href="#contact" class="btn-gold" style="background: var(--ink); color: var(--gold);">Notify Me at Launch ↗</a>
-    </div>
-  </div>
 </section>
 
 <!-- ── TESTIMONIALS ── -->
