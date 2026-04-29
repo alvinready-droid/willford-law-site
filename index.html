@@ -173,67 +173,67 @@ nav.scrolled {
 
 /* ─── MEDIA SECTION ─── */
 .media-section { background: var(--ink); padding: 6rem 4rem; }
-.media-section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem; }
-.media-section-head h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.1; }
-.media-section-head h2 em { font-style: italic; color: var(--gold-light); }
-.media-section-head p { max-width: 300px; font-size: .87rem; color: rgba(250,248,244,.45); line-height: 1.75; text-align: right; }
+.media-inner-layout {
+  display: grid; grid-template-columns: 1fr 40%;
+  gap: 4rem; align-items: center;
+}
+.media-left-col {}
+.media-left-col h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 300; line-height: 1.1; margin-bottom: 1rem; }
+.media-left-col h2 em { font-style: italic; color: var(--gold-light); }
+.media-left-col p { font-size: .9rem; color: rgba(250,248,244,.48); line-height: 1.8; margin-bottom: 2rem; max-width: 440px; font-weight: 300; }
 /* Video window */
 .media-video-wrap {
   position: relative; width: 100%; border-radius: var(--r-lg);
   overflow: hidden; background: var(--ink-3);
-  border: 1px solid rgba(200,169,110,.18);
-  box-shadow: 0 24px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(200,169,110,.08);
+  border: 1px solid rgba(200,169,110,.2);
+  box-shadow: 0 24px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(200,169,110,.06);
   aspect-ratio: 16/9;
-  margin-bottom: 2rem;
+  transition: border-color .4s, box-shadow .4s;
 }
+.media-video-wrap:hover { border-color: rgba(200,169,110,.4); box-shadow: 0 24px 80px rgba(0,0,0,.6), 0 0 40px rgba(200,169,110,.14); }
 .media-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
-/* Coming soon overlay — shown when no video is set */
 .media-placeholder {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,169,110,.07) 0%, transparent 70%),
-              var(--ink-3);
-  gap: 1.25rem;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,169,110,.07) 0%, transparent 70%), var(--ink-3);
+  gap: 1rem;
 }
-.media-placeholder-icon { font-size: 3.5rem; opacity: .35; }
-.media-placeholder-text { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: rgba(250,248,244,.3); letter-spacing: .04em; }
-.media-placeholder-sub { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,169,110,.4); }
-.media-placeholder-ring {
-  position: absolute; width: 160px; height: 160px; border-radius: 50%;
-  border: 1px solid rgba(200,169,110,.1); animation: ringPulse 3s ease-in-out infinite;
-}
-.media-placeholder-ring-2 {
-  position: absolute; width: 260px; height: 260px; border-radius: 50%;
-  border: 1px solid rgba(200,169,110,.05); animation: ringPulse 3s ease-in-out infinite .5s;
-}
+.media-placeholder-ring { position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 1px solid rgba(200,169,110,.12); animation: ringPulse 3s ease-in-out infinite; }
+.media-placeholder-ring-2 { position: absolute; width: 190px; height: 190px; border-radius: 50%; border: 1px solid rgba(200,169,110,.06); animation: ringPulse 3s ease-in-out infinite .5s; }
+.media-placeholder-icon { font-size: 2.5rem; opacity: .3; position: relative; z-index: 1; }
+.media-placeholder-text { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; color: rgba(250,248,244,.28); position: relative; z-index: 1; }
+.media-placeholder-sub { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,169,110,.35); position: relative; z-index: 1; }
 @keyframes ringPulse { 0%,100% { transform: scale(.95); opacity: .5; } 50% { transform: scale(1.05); opacity: 1; } }
-/* Gold border glow on hover */
-.media-video-wrap:hover { border-color: rgba(200,169,110,.38); box-shadow: 0 24px 80px rgba(0,0,0,.6), 0 0 32px rgba(200,169,110,.12); transition: border-color .4s, box-shadow .4s; }
-/* Social links row */
-.media-socials { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+/* Social links */
+.media-socials { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin-top: 2rem; }
 .media-social-link {
-  display: flex; align-items: center; gap: .65rem;
-  background: var(--ink-2); border: 1px solid rgba(200,169,110,.15);
-  border-radius: 99px; padding: .65rem 1.4rem;
-  text-decoration: none; color: rgba(250,248,244,.65);
-  font-size: .8rem; letter-spacing: .07em;
+  display: flex; align-items: center; gap: .6rem;
+  background: var(--ink-2); border: 1px solid rgba(200,169,110,.14);
+  border-radius: 99px; padding: .6rem 1.25rem;
+  text-decoration: none; color: rgba(250,248,244,.6);
+  font-size: .78rem; letter-spacing: .06em; font-weight: 400;
   transition: border-color .3s, color .3s, background .3s, transform .25s, box-shadow .3s;
   cursor: none;
 }
-.media-social-link:hover { border-color: var(--gold); color: var(--gold-light); background: rgba(200,169,110,.07); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(200,169,110,.15); }
-.media-social-icon { font-size: 1rem; }
-.media-social-link.yt { border-color: rgba(255,0,0,.2); }
-.media-social-link.yt:hover { border-color: rgba(255,0,0,.6); color: #ff4444; background: rgba(255,0,0,.06); box-shadow: 0 6px 24px rgba(255,0,0,.1); }
-.media-social-link.ig:hover { border-color: rgba(225,48,108,.5); color: #e1306c; background: rgba(225,48,108,.06); box-shadow: 0 6px 24px rgba(225,48,108,.1); }
-.media-social-link.fb:hover { border-color: rgba(24,119,242,.5); color: #1877f2; background: rgba(24,119,242,.06); }
-.media-social-link.li:hover { border-color: rgba(10,102,194,.5); color: #0a66c2; background: rgba(10,102,194,.06); }
-.media-notify { margin-left: auto; }
+.media-social-link svg { width: 16px; height: 16px; flex-shrink: 0; fill: currentColor; }
+.media-social-link:hover { transform: translateY(-2px); }
+.media-social-link.yt { border-color: rgba(255,0,0,.18); }
+.media-social-link.yt:hover { border-color: rgba(255,0,0,.55); color: #ff3333; background: rgba(255,0,0,.06); box-shadow: 0 6px 20px rgba(255,0,0,.1); }
+.media-social-link.ig:hover { border-color: rgba(225,48,108,.5); color: #e1306c; background: rgba(225,48,108,.06); box-shadow: 0 6px 20px rgba(225,48,108,.1); }
+.media-social-link.fb:hover { border-color: rgba(24,119,242,.5); color: #1877f2; background: rgba(24,119,242,.06); box-shadow: 0 6px 20px rgba(24,119,242,.1); }
+.media-social-link.li:hover { border-color: rgba(10,102,194,.5); color: #0a66c2; background: rgba(10,102,194,.06); box-shadow: 0 6px 20px rgba(10,102,194,.1); }
+.media-notify-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--gold); color: var(--ink); border: none;
+  border-radius: 99px; padding: .7rem 1.5rem;
+  font-size: .78rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; cursor: none; margin-top: .5rem;
+  transition: background .3s, box-shadow .3s, transform .25s;
+}
+.media-notify-btn:hover { background: var(--gold-light); box-shadow: 0 8px 28px rgba(200,169,110,.38); transform: translateY(-2px); }
 @media (max-width: 960px) {
   .media-section { padding: 5rem 2rem; }
-  .media-section-head { flex-direction: column; align-items: flex-start; }
-  .media-section-head p { text-align: left; max-width: 100%; }
-  .media-notify { margin-left: 0; }
-  .trust-bar { padding: 1.5rem 2rem; justify-content: flex-start; }
+  .media-inner-layout { grid-template-columns: 1fr; gap: 2.5rem; }
 }
 
 /* ─── SECTION UTILITIES ─── */
@@ -584,44 +584,56 @@ footer { background: var(--ink-3); padding: 5rem 4rem 3rem; border-top: 1px soli
 
 <!-- ── MEDIA SECTION ── -->
 <section class="media-section" id="media">
-  <div class="media-section-head reveal">
-    <div>
+  <div class="media-inner-layout">
+
+    <!-- LEFT — text + social links -->
+    <div class="media-left-col reveal">
       <div class="s-label"><span>Media &amp; Press</span></div>
       <h2>Watch. Listen.<br><em>Know Your Rights.</em></h2>
-    </div>
-    <p>Tom Willford is building a media presence to educate and empower everyday people. Videos, podcasts, and press features coming soon.</p>
-  </div>
+      <p>Tom Willford is building a media presence to educate and empower everyday people. Podcast appearances, legal commentary, and YouTube content are coming — follow along and be the first to know.</p>
 
-  <!-- Video window -->
-  <div class="media-video-wrap reveal">
-    <!-- SWAP THIS iframe src for a real YouTube embed when ready -->
-    <!-- Example: src="https://www.youtube.com/embed/VIDEO_ID?rel=0&autoplay=0" -->
-    <div class="media-placeholder">
-      <div class="media-placeholder-ring"></div>
-      <div class="media-placeholder-ring-2"></div>
-      <div class="media-placeholder-icon">▶</div>
-      <div class="media-placeholder-text">Coming Soon</div>
-      <div class="media-placeholder-sub">Tom Willford · Legal Insights</div>
-    </div>
-  </div>
+      <!-- Social links with real SVG icons -->
+      <div class="media-socials">
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@willfordlaw" target="_blank" class="media-social-link yt">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/willfordlawcorporation/" target="_blank" class="media-social-link ig">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          Instagram
+        </a>
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/WillfordLawCorporation/" target="_blank" class="media-social-link fb">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/tom-willford-b8818534/" target="_blank" class="media-social-link li">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+      </div>
 
-  <!-- Social links -->
-  <div class="media-socials reveal">
-    <a href="https://www.youtube.com/@willfordlaw" target="_blank" class="media-social-link yt">
-      <span class="media-social-icon">▶</span> YouTube
-    </a>
-    <a href="https://www.instagram.com/willfordlawcorporation/" target="_blank" class="media-social-link ig">
-      <span class="media-social-icon">◈</span> Instagram
-    </a>
-    <a href="https://www.facebook.com/WillfordLawCorporation/" target="_blank" class="media-social-link fb">
-      <span class="media-social-icon">f</span> Facebook
-    </a>
-    <a href="https://www.linkedin.com/in/tom-willford-b8818534/" target="_blank" class="media-social-link li">
-      <span class="media-social-icon">in</span> LinkedIn
-    </a>
-    <a href="#contact" class="media-social-link media-notify btn-gold" style="margin-left: auto; background: var(--gold); color: var(--ink); border-color: var(--gold);">
-      🔔 Notify Me When We Launch
-    </a>
+      <a href="#contact" class="media-notify-btn">
+        🔔 Notify Me When We Launch
+      </a>
+    </div>
+
+    <!-- RIGHT — video window -->
+    <div class="media-video-wrap reveal d2">
+      <!-- Swap iframe src with real YouTube embed ID when ready -->
+      <!-- <iframe src="https://www.youtube.com/embed/VIDEO_ID?rel=0" allowfullscreen></iframe> -->
+      <div class="media-placeholder">
+        <div class="media-placeholder-ring"></div>
+        <div class="media-placeholder-ring-2"></div>
+        <div class="media-placeholder-icon">▶</div>
+        <div class="media-placeholder-text">Coming Soon</div>
+        <div class="media-placeholder-sub">Tom Willford · Legal Insights</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
