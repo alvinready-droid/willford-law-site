@@ -33,7 +33,7 @@ body.hovering #cur-r { width: 50px; height: 50px; opacity: .5; }
 nav {
   position: fixed; inset: 0 0 auto 0; z-index: 200;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.6rem 4rem;
+  padding: 1.6rem 4rem; gap: 2rem;
   transition: background .5s, backdrop-filter .5s, padding .4s, border-color .5s;
   border-bottom: 1px solid transparent;
 }
@@ -41,8 +41,8 @@ nav.scrolled {
   background: rgba(13,13,14,.88); backdrop-filter: blur(22px);
   padding: 1rem 4rem; border-color: rgba(200,169,110,.1);
 }
-.nav-logo { display: flex; align-items: center; text-decoration: none; }
-.nav-logo img { height: 34px; filter: brightness(0) invert(1); opacity: .92; transition: opacity .3s; }
+.nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+.nav-logo img { height: 28px; max-width: 160px; object-fit: contain; filter: brightness(0) invert(1); opacity: .92; transition: opacity .3s; }
 .nav-logo:hover img { opacity: 1; }
 .nav-links { display: flex; align-items: center; gap: 2.4rem; }
 .nav-links a { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase; text-decoration: none; color: rgba(250,248,244,.55); transition: color .3s; }
